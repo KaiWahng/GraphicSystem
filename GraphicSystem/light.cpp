@@ -2,7 +2,7 @@
 #include "light.h"
 
 
-light::light(vector3 p, vector3 i)
+light::light(Vector3f p, Vector3f i)
 {
 	position = p;
 	illumination = i;

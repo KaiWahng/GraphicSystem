@@ -1,18 +1,20 @@
 #pragma once
-#include "vector3.h"
+#include <Eigen\Dense>
 #include "hitrecord.h"
+using namespace::Eigen;
+
 class surface
 {
 public:
 	surface();
-	surface(vector3 ka, vector3 kd, vector3 ks, vector3 p);
+	surface(Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p);
 	~surface();
-	virtual bool hit(vector3 origin, vector3 direction, float t0, float t1, hitrecord& rec);
-	vector3 k_ambient;
-	vector3 k_diffuse;
-	vector3 k_specular;
-	vector3 phong;
-	vector3 backgroundcolor;
+	virtual bool hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec);
+	Vector3f k_ambient;
+	Vector3f k_diffuse;
+	Vector3f k_specular;
+	Vector3f phong;
+	Vector3f backgroundcolor;
 	surface* children;
 	surface* sibling;
 };

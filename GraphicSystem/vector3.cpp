@@ -1,28 +1,28 @@
 #include "stdafx.h"
-#include "vector3.h"
+#include "Vector3f.h"
 #include <math.h>
 
-vector3::vector3(float v0, float v1, float v2)
+Vector3f::Vector3f(float v0, float v1, float v2)
 {
 	value[0] = v0;
 	value[1] = v1;
 	value[2] = v2;
 }
 
-vector3::~vector3()
+Vector3f::~Vector3f()
 {
 }
 
-vector3 vector3::crossproduct(const vector3 v3)
+Vector3f Vector3f::crossproduct(const Vector3f v3)
 {
-	vector3 result;
+	Vector3f result;
 	result[0] = value[1] * v3.value[2] - value[2] * v3.value[1];
 	result[1] = value[2] * v3.value[0] - value[0] * v3.value[2];
 	result[2] = value[0] * v3.value[1] - value[1] * v3.value[0];
 	return result;
 }
 
-void vector3::normalize()
+void Vector3f::normalize()
 {
 	float len = sqrt(value[0]* value[0] + value[1]* value[1] + value[2]*value[2]);
 	value[0] /= len;
@@ -30,44 +30,44 @@ void vector3::normalize()
 	value[2] /= len;
 }
 
-float& vector3::operator[](const int i)
+float& Vector3f::operator[](const int i)
 {
 	return value[i];
 }
 
-void vector3::operator=(const vector3 v3)
+void Vector3f::operator=(const Vector3f v3)
 {
 	value[0] = v3.value[0];
 	value[1] = v3.value[1];
 	value[2] = v3.value[2];
 }
 
-vector3 vector3::operator/(float f)
+Vector3f Vector3f::operator/(float f)
 {
-	return vector3(value[0] / f, value[1] / f, value[2] / f);
+	return Vector3f(value[0] / f, value[1] / f, value[2] / f);
 }
 
-vector3 vector3::operator-(vector3 v3)
+Vector3f Vector3f::operator-(Vector3f v3)
 {
-	return vector3(value[0]-v3.value[0], value[1] - v3.value[1], value[2] - v3.value[2]);
+	return Vector3f(value[0]-v3.value[0], value[1] - v3.value[1], value[2] - v3.value[2]);
 }
 
-vector3 vector3::operator+(vector3 v3)
+Vector3f Vector3f::operator+(Vector3f v3)
 {
-	return vector3(value[0] + v3.value[0], value[1] + v3.value[1], value[2] + v3.value[2]);
+	return Vector3f(value[0] + v3.value[0], value[1] + v3.value[1], value[2] + v3.value[2]);
 }
 
-vector3 vector3::operator*(float f)
+Vector3f Vector3f::operator*(float f)
 {
-	return vector3(value[0] * f, value[1] * f, value[2] * f);
+	return Vector3f(value[0] * f, value[1] * f, value[2] * f);
 }
 
-float vector3::operator*(vector3 v3)
+float Vector3f::operator*(Vector3f v3)
 {
 	return value[0] * v3.value[0]+value[1] * v3.value[1]+value[2] * v3.value[2];
 }
 
-vector3 vector3::operator^(vector3 v3)
+Vector3f Vector3f::operator^(Vector3f v3)
 {
-	return vector3(value[0]*v3.value[0], value[1] * v3.value[1], value[2] * v3.value[2]);
+	return Vector3f(value[0]*v3.value[0], value[1] * v3.value[1], value[2] * v3.value[2]);
 }

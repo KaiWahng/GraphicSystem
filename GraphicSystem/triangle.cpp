@@ -2,13 +2,14 @@
 #include "triangle.h"
 
 
-triangle::triangle(vector3 vertex0, vector3 vertex1, vector3 vertex2, vector3 ka, vector3 kd, vector3 ks, vector3 p): surface(ka, kd, ks, p)
+triangle::triangle(Vector3f vertex0, Vector3f vertex1, Vector3f vertex2, Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p, int id_set) : surface(ka, kd, ks, p)
 {
 	vertices[0] = vertex0;
 	vertices[1] = vertex1;
 	vertices[2] = vertex2;
-	normal = (vertex1-vertex0).crossproduct(vertex2-vertex0);
+	normal = (vertex1 - vertex0).cross(vertex2 - vertex0);
 	normal.normalize();
+	id = id_set;
 }
 
 
@@ -16,7 +17,7 @@ triangle::~triangle()
 {
 }
 
-bool triangle::hit(vector3 origin, vector3 direction, float t0, float t1, hitrecord& rec)
+bool triangle::hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec)
 {
 	float a = vertices[0][0] - vertices[1][0];
 	float b = vertices[0][1] - vertices[1][1];
@@ -41,7 +42,7 @@ bool triangle::hit(vector3 origin, vector3 direction, float t0, float t1, hitrec
 	float M = a*ei_hf + b*gf_di + c*dh_eg;
 	if (M == 0)
 		return false;
-	float t = -(f*ak_jb + e*jc_al + g*bl_kc) / M;
+	float t = -(f*ak_jb + e*jc_al + d*bl_kc) / M;
 	if ((t<t0) || (t>t1))
 		return false;
 	float beta = (j*ei_hf + k*gf_di + l*dh_eg) / M;

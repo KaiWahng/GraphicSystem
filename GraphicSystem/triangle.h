@@ -4,11 +4,12 @@ class triangle :
 	public surface
 {
 public:
-	triangle(vector3 vertex0, vector3 vertex1, vector3 vertex2, vector3 ka, vector3 kd, vector3 ks, vector3 p);
+	triangle(Vector3f vertex0, Vector3f vertex1, Vector3f vertex2, Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p, int id_set);
 	~triangle();
-	bool hit(vector3 origin, vector3 direction, float t0, float t1, hitrecord& rec);	
+	bool hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec);	
 private:
-	vector3 normal;
-	vector3 vertices[3];
+	Vector3f normal;
+	Vector3f vertices[3];
+	int id;
 };
 

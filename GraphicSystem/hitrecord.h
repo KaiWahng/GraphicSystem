@@ -1,15 +1,16 @@
 #pragma once
-#include "vector3.h"
+#include <Eigen\Dense>
+using namespace::Eigen;
 class hitrecord
 {
 public:
 	hitrecord();
 	~hitrecord();
 	float t;
-	vector3 normal;
-	vector3 k_ambient;
-	vector3 k_diffuse;
-	vector3 k_specular;
-	vector3 phong;
+	Vector3f normal;
+	Vector3f k_ambient;
+	Vector3f k_diffuse;
+	Vector3f k_specular;
+	Vector3f phong;
 };
 

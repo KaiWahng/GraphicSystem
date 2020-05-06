@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-sphere::sphere(vector3 c, float r, vector3 ka, vector3 kd, vector3 ks, vector3 p) : surface(ka, kd, ks, p)
+sphere::sphere(Vector3f c, float r, Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p) : surface(ka, kd, ks, p)
 {
 	center = c;
 	radius = r;
@@ -14,12 +14,12 @@ sphere::~sphere()
 {
 }
 
-bool sphere::hit(vector3 origin, vector3 direction, float t0, float t1, hitrecord& rec)
+bool sphere::hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec)
 {
-	vector3 o_c = (origin - center);
-	float o_c_2 = o_c*o_c;
-	float d_2 = direction*direction;
-	float d_o_c = direction*o_c;
+	Vector3f o_c = (origin - center);
+	float o_c_2 = o_c.squaredNorm();
+	float d_2 = direction.squaredNorm();
+	float d_o_c = direction.dot(o_c);
 	float discreminant = d_o_c*d_o_c - d_2*(o_c_2 - radius*radius);
 	float t = 0;
 	if (discreminant < 0)
@@ -39,7 +39,7 @@ bool sphere::hit(vector3 origin, vector3 direction, float t0, float t1, hitrecor
 	return true;
 }
 
-vector3 sphere::normal(vector3 point)
+Vector3f sphere::normal(Vector3f point)
 {
 	return point-center;
 }

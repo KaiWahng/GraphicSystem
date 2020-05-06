@@ -1,11 +1,12 @@
 #pragma once
-#include "vector3.h"
+#include <Eigen\Dense>
+using namespace::Eigen;
 class light
 {
 public:
-	light(vector3 p, vector3 i);
+	light(Vector3f p, Vector3f i);
 	~light();
-	vector3 position;
-	vector3 illumination;
+	Vector3f position;
+	Vector3f illumination;
 };
 

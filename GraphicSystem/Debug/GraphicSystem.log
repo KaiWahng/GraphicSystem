@@ -1,5 +1,18 @@
-﻿  camera.cpp
-c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\camera.cpp(39): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\camera.cpp(57): warning C4309: '=': truncation of constant value
-c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\camera.cpp(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  GraphicSystem.vcxproj -> c:\users\uidw5190\documents\visual studio 2015\Projects\GraphicSystem\Debug\GraphicSystem.exe
+﻿  stdafx.cpp
+  triangle.cpp
+  surface.cpp
+  sphere.cpp
+  light.cpp
+  hitrecord.cpp
+  GraphicSystem.cpp
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\graphicsystem.cpp(108): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\graphicsystem.cpp(110): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\graphicsystem.cpp(128): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  CommonWindows.cpp
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\commonwindows.cpp(189): warning C4018: '<': signed/unsigned mismatch
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\commonwindows.cpp(190): warning C4018: '<': signed/unsigned mismatch
+  camera.cpp
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\camera.cpp(45): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\uidw5190\documents\visual studio 2015\projects\graphicsystem\graphicsystem\camera.cpp(82): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+  Generating Code...
+  GraphicSystem.vcxproj -> C:\Users\uidw5190\Documents\Visual Studio 2015\Projects\GraphicSystem\Debug\GraphicSystem.exe
