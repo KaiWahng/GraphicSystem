@@ -1,0 +1,9 @@
+﻿  CommonWindows.cpp
+CommonWindows.cpp(189): warning C4018: '<': signed/unsigned mismatch
+CommonWindows.cpp(190): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  2 of 571 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  GraphicSystem.vcxproj -> C:\Users\uidw5190\Documents\Visual Studio 2015\Projects\GraphicSystem\Release\GraphicSystem.exe
