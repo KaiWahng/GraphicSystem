@@ -3,3 +3,6 @@ Debug
 GraphicSystem.VC.*
 Release
 ipch
+GraphicSystem\Debug
+GraphicSystem\Release
+
