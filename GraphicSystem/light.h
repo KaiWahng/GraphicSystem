@@ -4,9 +4,9 @@ using namespace::Eigen;
 class light
 {
 public:
-	light(Vector3f p, Vector3f i);
+	light(const Vector4f * p, Vector3f i);
 	~light();
-	Vector3f position;
+	Vector4f position;
 	Vector3f illumination;
 };
 

@@ -9,11 +9,11 @@ char cam_min(unsigned int a, unsigned int b)
 {
 	return a < b ? a : b;
 }
-camera::camera(Vector3f vp, Vector3f v_set, Vector3f w_set)
+camera::camera(const Vector4f *  vp, const Vector4f *  v_set, const Vector4f *  w_set)
 {
-	viewposition = vp;
-	v = v_set;
-	w = w_set;
+	viewposition = *vp;
+	v = *v_set;
+	w = *w_set;
 	focallen = w.norm();
 	//Allocate big array in heap
 	image = new Vector3f [viewport_width *viewport_height];
@@ -31,27 +31,35 @@ void camera::photo(surface * scene, light * l_diffuse, light * l_ambient, Vector
 	{
 		for (int j = 0; j < viewport_width; j++)
 		{
-			if (i == 85 && j == 444)
-				while (0);
 			hitrecord rec;
-			Vector3f d = calculate_direction(viewposition, focallen,i, j);
+			Vector4f d = calculate_direction(&viewposition, focallen,i, j);
 			Vector3f result(0,0,0);
-			if (scene->hit(viewposition, d, 1, 1000, rec))
+			// Look for ray hit any object
+			if (scene->hit(&viewposition, &d, 1, 1000, rec))
 			{
-				Vector3f p = viewposition + d*rec.t;
-				Vector3f l = l_diffuse->position - p;
+				Vector4f p = viewposition + d*rec.t;
+				Vector4f l = l_diffuse->position - p;
 				hitrecord srec;
+				// Shade the object - ambient
 				result += rec.k_ambient.cwiseProduct(l_ambient->illumination);
-				if (!scene->hit(p, l, 0.01, INFINITY, srec))
+				// Look for if there something block the object from been lightened
+				if (!scene->hit(&p, &l, 0.01, INFINITY, srec))
 				{
+
+					// Shade the object - diffuse
 					l.normalize();
-					//d = d*-1;
-					//d.normalize();
-					//Vector3f h = (l+d);
-					//h.normalize();
 					float ag_diffuse = rec.normal.dot(l);
 					if (ag_diffuse > 0)
 						result += rec.k_diffuse.cwiseProduct(l_diffuse->illumination)*ag_diffuse;
+					
+					// Shade the object - specular
+					d = d*-1;
+					d.normalize();
+					Vector4f h = (l + d);
+					h.normalize();
+					float ag_specular = rec.normal.dot(h);
+					if (ag_specular > 0)
+						result += rec.k_specular.cwiseProduct(l_diffuse->illumination)*(pow(ag_specular, rec.phong));					
 				}
 			}
 			else
@@ -77,7 +85,7 @@ void camera::photo(surface * scene, light * l_diffuse, light * l_ambient, Vector
 }
 
 
-Vector3f camera::calculate_direction(Vector3f origin, float f, int i, int j)
+Vector4f camera::calculate_direction(const Vector4f * origin, float f, int i, int j)
 {
-	return (Vector3f(origin[0] - f, j- viewport_width /2, viewport_height /2-i) - origin);
+	return (Vector4f((*origin)[0] - f, j- viewport_width /2, viewport_height /2-i, 1) - *origin);
 }

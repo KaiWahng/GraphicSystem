@@ -2,12 +2,12 @@
 #include "triangle.h"
 
 
-triangle::triangle(Vector3f vertex0, Vector3f vertex1, Vector3f vertex2, Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p, int id_set) : surface(ka, kd, ks, p)
+triangle::triangle(const Vector4f * vertex0, const Vector4f * vertex1, const Vector4f * vertex2, Vector3f ka, Vector3f kd, Vector3f ks, float p, int id_set) : surface(ka, kd, ks, p)
 {
-	vertices[0] = vertex0;
-	vertices[1] = vertex1;
-	vertices[2] = vertex2;
-	normal = (vertex1 - vertex0).cross(vertex2 - vertex0);
+	vertices[0] = *vertex0;
+	vertices[1] = *vertex1;
+	vertices[2] = *vertex2;
+	normal = ((*vertex1 - *vertex0).head<3>().cross((*vertex2 - *vertex0).head<3>()).homogeneous());
 	normal.normalize();
 	id = id_set;
 }
@@ -17,7 +17,7 @@ triangle::~triangle()
 {
 }
 
-bool triangle::hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec)
+bool triangle::hit(const Vector4f * origin, const Vector4f * direction, float t0, float t1, hitrecord& rec)
 {
 	float a = vertices[0][0] - vertices[1][0];
 	float b = vertices[0][1] - vertices[1][1];
@@ -25,12 +25,12 @@ bool triangle::hit(Vector3f origin, Vector3f direction, float t0, float t1, hitr
 	float d = vertices[0][0] - vertices[2][0];
 	float e = vertices[0][1] - vertices[2][1];
 	float f = vertices[0][2] - vertices[2][2];
-	float g = direction[0];
-	float h = direction[1];
-	float i = direction[2];
-	float j = vertices[0][0] - origin[0];
-	float k = vertices[0][1] - origin[1];
-	float l = vertices[0][2] - origin[2];
+	float g = (*direction)[0];
+	float h = (*direction)[1];
+	float i = (*direction)[2];
+	float j = vertices[0][0] - (*origin)[0];
+	float k = vertices[0][1] - (*origin)[1];
+	float l = vertices[0][2] - (*origin)[2];
 
 	float ei_hf = e*i - h*f;
 	float gf_di = g*f - d*i;

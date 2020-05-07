@@ -10,15 +10,15 @@ using namespace::Eigen;
 class camera
 {
 public:
-	camera(Vector3f vp, Vector3f v_set, Vector3f w_set);
+	camera(const Vector4f * vp, const Vector4f * v_set, const Vector4f * w_set);
 	~camera();
 	void photo(surface* scene, light * l_diffuse, light * l_ambient, Vector3f * bg);
 	//void photo(surface* scene, light * l_diffuse, light * l_ambient, Vector3f * bg, windowDemo * wd);
-	Vector3f calculate_direction(Vector3f origin, float f, int i, int j);
-	Vector3f viewposition;
-	Vector3f u;
-	Vector3f v;
-	Vector3f w;
+	Vector4f calculate_direction(const Vector4f * origin, float f, int i, int j);
+	Vector4f viewposition;
+	Vector4f u;
+	Vector4f v;
+	Vector4f w;
 	float focallen;
 	Vector3f * image;
 };

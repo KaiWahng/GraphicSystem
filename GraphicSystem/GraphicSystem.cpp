@@ -16,30 +16,32 @@ using namespace::Eigen;
 
 int main()
 {
-	Vector3f kd(0, 1, 0);
+	Vector3f kd(0, 0.5, 0);
+	Vector3f ks(0.5, 1, 0.5);
 	Vector3f kd_t(1, 0, 0);
 	Vector3f dummy(0,0,0);
-
-	Vector3f a(-100, -50, 50);
-	Vector3f b(-100, 50, 50);
-	Vector3f c(-100, -50, -50);
-	Vector3f d(-100, 50, -50);
-	Vector3f e(-200, -50, 50);
-	Vector3f f(-200, 50, 50);
-	Vector3f g(-200, -50, -50);
-	Vector3f h(-200, 50, -50);
-	triangle tri11(a, c, b, kd_t, kd_t, dummy, dummy, 11);
-	triangle tri12(d, b, c, kd_t, kd_t, dummy, dummy,12);
-	triangle tri21(b, d, f, kd_t, kd_t, dummy, dummy,21);
-	triangle tri22(h, f, d, kd_t, kd_t, dummy, dummy,22);
-	triangle tri31(a, b, e, kd_t, kd_t, dummy, dummy,31);
-	triangle tri32(f, e, b, kd_t, kd_t, dummy, dummy,32);
-	triangle tri41(g, e, h, kd_t, kd_t, dummy, dummy,41);
-	triangle tri42(f, h, e, kd_t, kd_t, dummy, dummy,42);
-	triangle tri51(a, e, c, kd_t, kd_t, dummy, dummy,51);
-	triangle tri52(g, c, e, kd_t, kd_t, dummy, dummy,52);
-	triangle tri61(c, g, d, kd_t, kd_t, dummy, dummy,61);
-	triangle tri62(h, d, g, kd_t, kd_t, dummy, dummy,62);
+	float phong1 = 3;
+	float phong2 = 200;
+	Vector4f a(-100, -50, 50, 1);
+	Vector4f b(-100, 50, 50, 1);
+	Vector4f c(-100, -50, -50, 1);
+	Vector4f d(-100, 50, -50, 1);
+	Vector4f e(-200, -50, 50, 1);
+	Vector4f f(-200, 50, 50, 1);
+	Vector4f g(-200, -50, -50, 1);
+	Vector4f h(-200, 50, -50, 1);
+	triangle tri11(&a, &c, &b, kd_t, kd_t, kd_t, phong1, 11);
+	triangle tri12(&d, &b, &c, kd_t, kd_t, kd_t, phong1,12);
+	triangle tri21(&b, &d, &f, kd_t, kd_t, kd_t, phong1,21);
+	triangle tri22(&h, &f, &d, kd_t, kd_t, kd_t, phong1,22);
+	triangle tri31(&a, &b, &e, kd_t, kd_t, kd_t, phong1,31);
+	triangle tri32(&f, &e, &b, kd_t, kd_t, kd_t, phong1,32);
+	triangle tri41(&g, &e, &h, kd_t, kd_t, kd_t, phong1,41);
+	triangle tri42(&f, &h, &e, kd_t, kd_t, kd_t, phong1,42);
+	triangle tri51(&a, &e, &c, kd_t, kd_t, kd_t, phong1,51);
+	triangle tri52(&g, &c, &e, kd_t, kd_t, kd_t, phong1,52);
+	triangle tri61(&c, &g, &d, kd_t, kd_t, kd_t, phong1,61);
+	triangle tri62(&h, &d, &g, kd_t, kd_t, kd_t, phong1,62);
 	surface cube;
 	cube.children = &tri11;
 	tri11.sibling = &tri12;
@@ -87,16 +89,14 @@ int main()
 	//triangle tri8(a, c, b, dummy, kd_t, dummy, dummy);
 	//triangle tri9(b, c, d, dummy, kd_t, dummy, dummy);
 	
-	sphere s0(Vector3f(0, 0, 100), 20, kd, kd, dummy, dummy);
-	sphere s1(Vector3f(0, 0, 0), 20, kd, kd, dummy, dummy);
-	sphere s2(Vector3f(0, 400, 0), 20, kd, kd, dummy, dummy);
-	sphere s3(Vector3f(0, 100, 70), 20, kd, kd, dummy, dummy);
-	sphere s4(Vector3f(0, -100, 0), 20, kd, kd, dummy, dummy);
-	sphere s5(Vector3f(0, 0, -100), 20, kd, kd, dummy, dummy);
-	
-	sphere s6(Vector3f(0, 0, 100), 10, dummy, kd, dummy, dummy);
+	sphere s0(&Vector4f(0, 0, 100, 1), 20, kd, kd, ks, phong2);
+	sphere s1(&Vector4f(0, 0, 0, 1), 20, kd, kd, ks, phong2);
+	sphere s2(&Vector4f(0, 400, 0, 1), 20, kd, kd, ks, phong2);
+	sphere s3(&Vector4f(0, 100, 70, 1), 20, kd, kd, ks, phong2);
+	sphere s4(&Vector4f(0, -100, 0, 1), 20, kd, kd, ks, phong2);
+	sphere s5(&Vector4f(0, 0, -100, 1), 20, kd, kd, ks, phong2);
+	sphere s6(&Vector4f(0, 0, 0, 1), 50, kd, kd, ks, phong2);
 
-	sphere s7 = sphere(Vector3f(0, 0, 100), 10, dummy, kd, dummy, dummy);
 	//tri0.sibling = &s0;
 	s0.sibling = &s1;
 	s1.sibling = &s2;
@@ -105,16 +105,15 @@ int main()
 	s4.sibling = &s5;
 	cube.sibling = &s0;
 	surface scene;
-	light la(Vector3f(0, 0, 0), Vector3f(0.1, 0.1, 0.1));
-	light l0(Vector3f(100,0,200), Vector3f(1,1,1));
+	light la(&Vector4f(0, 0, 0, 1), Vector3f(0.1, 0.1, 0.1));
+	light l0(&Vector4f(500,500,200, 1), Vector3f(1,1,1));
 	Vector3f bg(0.1, 0.1, 0.1);
 	scene.children = &cube;
-	camera ca(Vector3f(100,100,200), Vector3f(0, 0, 1), Vector3f(-50, 0, 0));
+	camera ca(&Vector4f(100,0,0, 1), &Vector4f(0, 0, 1, 0), &Vector4f(-50, 0, 0, 0));
 	char * fn = new char[12];
 	windowDemo myDemo = windowDemo();
 	window_t* mywindowIns = myDemo.pCreateWindow("Viewer", 800, 400);
 	stframebuffer *framebuffer;
-
 	framebuffer = (stframebuffer*)malloc(sizeof(stframebuffer));
 	framebuffer->width = 800;
 	framebuffer->height = 480;

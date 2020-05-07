@@ -2,9 +2,9 @@
 #include "light.h"
 
 
-light::light(Vector3f p, Vector3f i)
+light::light(const Vector4f *  p, Vector3f i)
 {
-	position = p;
+	position = *p;
 	illumination = i;
 }
 

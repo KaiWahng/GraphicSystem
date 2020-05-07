@@ -4,12 +4,12 @@ class sphere :
 	public surface
 {
 public:
-	sphere(Vector3f c, float r, Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p);
+	sphere(const Vector4f * c, float r, Vector3f ka, Vector3f kd, Vector3f ks, float p);
 	~sphere();
-	bool hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec);
-	Vector3f normal(Vector3f point);
+	bool hit(const Vector4f * origin, const Vector4f * direction, float t0, float t1, hitrecord& rec);
+	Vector4f normal(const Vector4f * point);
 private:
-	Vector3f center;
+	Vector4f center;
 	float radius;
 };
 

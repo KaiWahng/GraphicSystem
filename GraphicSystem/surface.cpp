@@ -6,7 +6,7 @@ surface::surface()
 {
 }
 
-surface::surface(Vector3f ka, Vector3f kd, Vector3f ks, Vector3f p):k_ambient(ka),k_diffuse(kd),k_specular(ks),phong(p)
+surface::surface(Vector3f ka, Vector3f kd, Vector3f ks, float p):k_ambient(ka),k_diffuse(kd),k_specular(ks),phong(p)
 {
 }
 
@@ -15,7 +15,7 @@ surface::~surface()
 {
 }
 
-bool surface::hit(Vector3f origin, Vector3f direction, float t0, float t1, hitrecord& rec)
+bool surface::hit(const Vector4f * origin, const Vector4f * direction, float t0, float t1, hitrecord& rec)
 {
 	bool hitflag = false;
 	surface * it = children;
