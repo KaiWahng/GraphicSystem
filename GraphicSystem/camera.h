@@ -1,7 +1,7 @@
 #pragma once
 #include "surface.h"
 #include "CommonWindows.h"
-#include <Eigen\Dense>
+#include "Eigen\Dense"
 #include "light.h"
 #define viewport_width 800
 #define viewport_height 480

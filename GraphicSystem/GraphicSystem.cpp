@@ -11,7 +11,7 @@
 #include "CommonWindows.h"
 #include <iostream>
 #include <fstream>
-#include <Eigen/Dense>
+#include "Eigen\Dense"
 using namespace::Eigen;
 
 int main()
@@ -30,6 +30,10 @@ int main()
 	Vector4f f(-200, 50, 50, 1);
 	Vector4f g(-200, -50, -50, 1);
 	Vector4f h(-200, 50, -50, 1);
+	Vector4f p1_1(-1000, -1000, 0, 1);
+	Vector4f p1_2(1000, 1000, 0, 1);
+	Vector4f p1_3(-1000, 1000, 0, 1);
+	Vector4f p1_4(1000, -1000, 0, 1);
 	triangle tri11(&a, &c, &b, kd_t, kd_t, kd_t, phong1, 11);
 	triangle tri12(&d, &b, &c, kd_t, kd_t, kd_t, phong1,12);
 	triangle tri21(&b, &d, &f, kd_t, kd_t, kd_t, phong1,21);
@@ -42,6 +46,9 @@ int main()
 	triangle tri52(&g, &c, &e, kd_t, kd_t, kd_t, phong1,52);
 	triangle tri61(&c, &g, &d, kd_t, kd_t, kd_t, phong1,61);
 	triangle tri62(&h, &d, &g, kd_t, kd_t, kd_t, phong1,62);
+	triangle plane1_1(&h, &d, &g, kd_t, kd_t, kd_t, phong1, 62);
+	triangle plane1_2(&h, &d, &g, kd_t, kd_t, kd_t, phong1, 62);
+
 	surface cube;
 	cube.children = &tri11;
 	tri11.sibling = &tri12;
