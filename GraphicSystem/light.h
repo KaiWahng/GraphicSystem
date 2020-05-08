@@ -8,5 +8,6 @@ public:
 	~light();
 	Vector4f position;
 	Vector3f illumination;
+	light * sibling;
 };
 

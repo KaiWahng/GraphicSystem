@@ -12,7 +12,7 @@ class camera
 public:
 	camera(const Vector4f * vp, const Vector4f * v_set, const Vector4f * w_set);
 	~camera();
-	void photo(surface* scene, light * l_diffuse, light * l_ambient, Vector3f * bg);
+	void photo(surface* scene, light * l_set, light * l_ambient, Vector3f * bg);
 	//void photo(surface* scene, light * l_diffuse, light * l_ambient, Vector3f * bg, windowDemo * wd);
 	Vector4f calculate_direction(const Vector4f * origin, float f, int i, int j);
 	Vector4f viewposition;

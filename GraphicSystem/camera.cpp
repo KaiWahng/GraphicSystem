@@ -25,7 +25,7 @@ camera::~camera()
 	delete [] image;
 }
 
-void camera::photo(surface * scene, light * l_diffuse, light * l_ambient, Vector3f * bg)
+void camera::photo(surface * scene, light * l_set, light * l_ambient, Vector3f * bg)
 {
 	for (int i = 0; i < viewport_height; i++)
 	{
@@ -37,29 +37,36 @@ void camera::photo(surface * scene, light * l_diffuse, light * l_ambient, Vector
 			// Look for ray hit any object
 			if (scene->hit(&viewposition, &d, 1, 1000, rec))
 			{
-				Vector4f p = viewposition + d*rec.t;
-				Vector4f l = l_diffuse->position - p;
-				hitrecord srec;
 				// Shade the object - ambient
 				result += rec.k_ambient.cwiseProduct(l_ambient->illumination);
-				// Look for if there something block the object from been lightened
-				if (!scene->hit(&p, &l, 0.01, INFINITY, srec))
-				{
+				Vector4f p = viewposition + d*rec.t;
+				d = d*-1;
+				d.normalize();
 
-					// Shade the object - diffuse
-					l.normalize();
-					float ag_diffuse = rec.normal.dot(l);
-					if (ag_diffuse > 0)
-						result += rec.k_diffuse.cwiseProduct(l_diffuse->illumination)*ag_diffuse;
+				light * l_iter = l_set;
+				while(l_iter)
+				{
+					Vector4f l = l_iter->position - p;
+
+					hitrecord srec;
+					// Look for if there something block the object from been lightened
+					if (!scene->hit(&p, &l, 0.01, INFINITY, srec))
+					{
+
+						// Shade the object - diffuse
+						l.normalize();
+						float ag_diffuse = rec.normal.dot(l);
+						if (ag_diffuse > 0)
+							result += rec.k_diffuse.cwiseProduct(l_iter->illumination)*ag_diffuse;
 					
-					// Shade the object - specular
-					d = d*-1;
-					d.normalize();
-					Vector4f h = (l + d);
-					h.normalize();
-					float ag_specular = rec.normal.dot(h);
-					if (ag_specular > 0)
-						result += rec.k_specular.cwiseProduct(l_diffuse->illumination)*(pow(ag_specular, rec.phong));					
+						// Shade the object - specular
+						Vector4f h = (l + d);
+						h.normalize();
+						float ag_specular = rec.normal.dot(h);
+						if (ag_specular > 0)
+							result += rec.k_specular.cwiseProduct(l_iter->illumination)*(pow(ag_specular, rec.phong));
+					}
+					l_iter = l_iter->sibling;
 				}
 			}
 			else
